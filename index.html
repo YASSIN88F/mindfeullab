@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindFuelLab - Fuel Your Mind</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS - No external files needed -->
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --primary-color: #2563eb; /* A modern, vibrant blue */
+            --primary-hover-color: #1d4ed8;
+            --secondary-color: #f4f7fc; /* A very light blue/gray for backgrounds */
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white-color: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        /* Global Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--white-color);
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.25rem; color: var(--primary-color); }
+        h3 { font-size: 1.5rem; }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--primary-hover-color);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 6rem 0;
+        }
+        
+        .section-bg {
+            background-color: var(--secondary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover-color);
+            color: var(--white-color);
+            transform: translateY(-2px);
+        }
+
+        /* 1. Sticky Header */
+        .main-header {
+            background-color: var(--white-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+        
+        .logo img {
+            height: 40px;
+            /* In case image fails to load */
+            vertical-align: middle;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .main-nav a {
+            color: var(--text-dark);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .main-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* 2. Hero Section */
+        .hero {
+            /* IMPORTANT: Replace this placeholder background image */
+            background-image: linear-gradient(rgba(20, 30, 40, 0.7), rgba(20, 30, 40, 0.7)), url('https://placehold.co/1920x1080/a9d6e5/ffffff?text=Mind+Image');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white-color);
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            color: var(--white-color);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 3. About Section */
+        #about .container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        #about .about-content {
+            flex: 1;
+        }
+        
+        #about .about-image {
+            flex: 1;
+        }
+
+        #about .about-image img {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* 4. Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-content h3 {
+            margin-top: 0;
+            color: var(--text-dark);
+        }
+
+        .card-content .btn {
+            margin-top: 1rem;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 5. Contact Section */
+        .contact-form {
+            max-width: 700px;
+            margin: 3rem auto 0 auto;
+            background: var(--white-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 6. Footer */
+        .main-footer {
+            background-color: var(--text-dark);
+            color: var(--white-color);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .social-links {
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            color: var(--white-color);
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            opacity: 1;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            section { padding: 4rem 0; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .main-nav ul {
+                gap: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            #about .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-form {
+                padding: 2rem;
+            }
+            h1 { font-size: 2.2rem; }
+            .hero-content p { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. STICKY HEADER -->
+    <header class="main-header" id="header">
+        <div class="container">
+            <a href="#hero" class="logo">
+                <!-- IMPORTANT: Replace with your logo.png file. Recommended size: 150x40px -->
+                <img src="https://placehold.co/150x40/2563eb/ffffff?text=MindFuelLab" alt="MindFuelLab Logo">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. HERO SECTION -->
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1>Welcome to MindFuelLab</h1>
+                <p>Unlock your potential with insights on learning, productivity, and mental clarity.</p>
+                <a href="#blog" class="btn">Start Reading</a>
+            </div>
+        </section>
+
+        <!-- 3. ABOUT SECTION -->
+        <section id="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2>Fueling Curious Minds</h2>
+                    <p>MindFuelLab is a dedicated space for those who believe in lifelong learning and self-improvement. We explore cutting-edge research, practical strategies, and timeless wisdom to help you sharpen your mind, boost your productivity, and lead a more fulfilling life.</p>
+                    <p>Our mission is to distill complex topics into clear, actionable advice that you can apply immediately. Join our community of curious minds and start your journey of growth today.</p>
+                </div>
+                <div class="about-image">
+                    <!-- IMPORTANT: Replace this placeholder image for the About section -->
+                    <img src="https://placehold.co/500x350/a9d6e5/1e293b?text=Inspiration" alt="A person reading a book in a well-lit room">
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. BLOG SECTION -->
+        <section id="blog" class="section-bg">
+            <div class="container">
+                <div style="text-align: center;">
+                    <h2>Latest Articles</h2>
+                    <p>Dive into our latest posts and fuel your intellect.</p>
+                </div>
+                
+                <div class="blog-grid">
+                    <!-- BLOG POST 1: Replace content and image -->
+                    <article class="blog-card">
+                        <img src="https://placehold.co/400x200/4f46e5/ffffff?text=Post+1" alt="Blog post image 1">
+                        <div class="card-content">
+                            <h3>The Science of a Perfect Morning Routine</h3>
+                            <p>Discover how to leverage neuroscience to create a morning routine that sets you up for a day of peak performance and focus.</p>
+                            <!-- IMPORTANT: Replace '#' with your actual blog post link -->
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- BLOG POST 2: Replace content and image -->
+                    <article class="blog-card">
+                        <img src="https://placehold.co/400x200/16a34a/ffffff?text=Post+2" alt="Blog post image 2">
+                        <div class="card-content">
+                            <h3>10 Powerful Techniques to Overcome Procrastination</h3>
+                            <p>Struggling with procrastination? These evidence-based techniques will help you stop delaying and start doing.</p>
+                            <!-- IMPORTANT: Replace '#' with your actual blog post link -->
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- BLOG POST 3: Replace content and image -->
+                    <article class="blog-card">
+                        <img src="https://placehold.co/400x200/c2410c/ffffff?text=Post+3" alt="Blog post image 3">
+                        <div class="card-content">
+                            <h3>Mindful Reading: How to Absorb More From Books</h3>
+                            <p>It's not just about reading more, but reading better. Learn techniques for mindful reading to improve comprehension and retention.</p>
+                            <!-- IMPORTANT: Replace '#' with your actual blog post link -->
+                            <a href="#" class="btn">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT SECTION -->
+        <section id="contact">
+            <div class="container">
+                <div style="text-align: center;">
+                    <h2>Get In Touch</h2>
+                    <p>Have questions, suggestions, or just want to say hi? Drop us a line!</p>
+                </div>
+                
+                <!-- IMPORTANT: To make this form work, you'll need a service like Formspree.io -->
+                <!-- Replace 'YOUR_EMAIL_HERE' with your Formspree endpoint -->
+                <form action="https://formspree.io/f/YOUR_EMAIL_HERE" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" class="form-control" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn submit-btn">Submit Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 6. FOOTER -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="social-links">
+                <!-- IMPORTANT: Replace '#' with your actual social media links -->
+                <!-- For icons, you can use SVG or an icon font library -->
+                <a href="#">Facebook</a>
+                <a href="#">TikTok</a>
+                <a href="mailto:hello@mindfuellab.com">Email</a>
+            </div>
+            <p class="copyright">© 2025 MindFuelLab. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
